@@ -4,14 +4,10 @@ import java.util.Objects;
 
 // Models a chance of an event occurring
 class Probability {
-    private double probability;
+    double value;
 
     Probability(double probability) {
-        this.probability = probability;
-    }
-
-    double getProbability() {
-        return probability;
+        this.value = probability;
     }
 
     @Override
@@ -21,11 +17,20 @@ class Probability {
             return false;
         }
         Probability other = (Probability) obj;
-        return Double.compare(other.probability, probability) == 0;
+        return Double.compare(other.value, value) == 0;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(probability);
+        return Objects.hash(value);
+    }
+
+    Probability andOperation(Probability probabilityOther) {
+        return new Probability(value * probabilityOther.value);
+    }
+
+    Probability notOperation() {
+        return new Probability(1 - value);
     }
 }
+

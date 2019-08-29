@@ -6,6 +6,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 class ProbabilityTest {
+    private final double DELTA = 0.001;
+
     @Test
     void expectTrueWhenProbabilityReferencesAreEqual() {
         Probability probabilityOne = new Probability(0.5);
@@ -16,8 +18,7 @@ class ProbabilityTest {
     @Test
     void expectFalseWhenProbabilityOtherIsNull() {
         Probability probabilityOne = new Probability(0.5);
-        Probability probabilityOther = null;
-        assertFalse(probabilityOne.equals(probabilityOther));
+        assertFalse(probabilityOne.equals(null));
     }
 
     @Test
@@ -42,11 +43,29 @@ class ProbabilityTest {
     }
 
     @Test
-    void expectZeroPointZeroEightWithZeroPointFiveAndZeroPointOneSix() {
-        ProbabilityOperator operator = new ProbabilityOperator();
+    void expectZeroPointZeroEightWithAndOfZeroPointFiveAndZeroPointOneSix() {
         Probability probabilityOne = new Probability(0.5);
         Probability probabilityOther = new Probability(0.16);
-        assertEquals(0.08, operator.andOperation(probabilityOne, probabilityOther).getProbability());
+        assertEquals(0.08, probabilityOne.andOperation(probabilityOther).value, DELTA);
     }
 
+    @Test
+    void expectZeroPointTwoWithAndOfZeroPointTwoFiveAndZeroPointEight() {
+        Probability probabilityOne = new Probability(0.25);
+        Probability probabilityOther = new Probability(0.8);
+        assertEquals(0.2, probabilityOne.andOperation(probabilityOther).value, DELTA);
+    }
+
+    @Test
+    void expectZeroPointFourWithNotOfZeroPointSix() {
+        Probability probability = new Probability(0.6);
+        assertEquals(0.4, probability.notOperation().value, DELTA);
+    }
+
+    @Test
+    void expectZeroPointOneWithNotOfZeroPointNine() {
+        Probability probability = new Probability(0.9);
+        assertEquals(0.1, probability.notOperation().value, DELTA);
+    }
 }
+
