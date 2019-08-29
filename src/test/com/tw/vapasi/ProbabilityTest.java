@@ -2,11 +2,9 @@ package com.tw.vapasi;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 
-@SuppressWarnings("SimplifiableJUnitAssertion")
 class ProbabilityTest {
     @Test
     void expectTrueWhenProbabilityReferencesAreEqual() {
@@ -15,7 +13,6 @@ class ProbabilityTest {
         assertTrue(probabilityOne.equals(probabilityOther));
     }
 
-    @SuppressWarnings("SimplifiableJUnitAssertion")
     @Test
     void expectFalseWhenProbabilityOtherIsNull() {
         Probability probabilityOne = new Probability(0.5);
@@ -42,6 +39,14 @@ class ProbabilityTest {
         Probability probabilityOne = new Probability(0.4);
         Probability probabilityOther = new Probability(0.7);
         assertFalse(probabilityOne.equals(probabilityOther));
+    }
+
+    @Test
+    void expectZeroPointZeroEightWithZeroPointFiveAndZeroPointOneSix() {
+        ProbabilityOperator operator = new ProbabilityOperator();
+        Probability probabilityOne = new Probability(0.5);
+        Probability probabilityOther = new Probability(0.16);
+        assertEquals(0.08, operator.andOperation(probabilityOne, probabilityOther).getProbability());
     }
 
 }
