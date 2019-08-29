@@ -32,5 +32,8 @@ class Probability {
     Probability notOperation() {
         return new Probability(1 - value);
     }
-}
 
+    Probability orOperation(Probability probabilityOther) {
+        return new Probability((value + probabilityOther.value) - andOperation(probabilityOther).value);
+    }
+}

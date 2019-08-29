@@ -67,5 +67,19 @@ class ProbabilityTest {
         Probability probability = new Probability(0.9);
         assertEquals(0.1, probability.notOperation().value, DELTA);
     }
+
+    @Test
+    void expectZeroPointEightSixWithOrOfZeroPointThreeAndZeroPointEight() {
+        Probability probabilityOne = new Probability(0.3);
+        Probability probabilityOther = new Probability(0.8);
+        assertEquals(0.86, probabilityOne.orOperation(probabilityOther).value, DELTA);
+    }
+
+    @Test
+    void expectZeroPointSevenSixWithOrOfZeroPointSevenAndZeroPointTwo() {
+        Probability probabilityOne = new Probability(0.7);
+        Probability probabilityOther = new Probability(0.2);
+        assertEquals(0.76, probabilityOne.orOperation(probabilityOther).value, DELTA);
+    }
 }
 
