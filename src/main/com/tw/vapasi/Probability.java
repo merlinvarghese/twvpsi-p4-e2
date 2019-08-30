@@ -1,10 +1,12 @@
 package com.tw.vapasi;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Objects;
 
 // Models a chance of an event occurring
 class Probability {
-    double value;
+    private final double value;
 
     Probability(double probability) {
         this.value = probability;
@@ -17,6 +19,7 @@ class Probability {
             return false;
         }
         Probability other = (Probability) obj;
+        System.out.println(value + " " + other.value);
         return Double.compare(other.value, value) == 0;
     }
 
@@ -26,14 +29,18 @@ class Probability {
     }
 
     Probability andOperation(Probability probabilityOther) {
-        return new Probability(value * probabilityOther.value);
+        return new Probability(formatToNDecimalPlaces(2, value * probabilityOther.value));
     }
 
     Probability notOperation() {
-        return new Probability(1 - value);
+        return new Probability(formatToNDecimalPlaces(2, 1 - value));
     }
 
     Probability orOperation(Probability probabilityOther) {
-        return new Probability((value + probabilityOther.value) - andOperation(probabilityOther).value);
+        return new Probability(formatToNDecimalPlaces(2, (value + probabilityOther.value) - andOperation(probabilityOther).value));
+    }
+
+    private double formatToNDecimalPlaces(int n, double input) {
+        return new BigDecimal(input).setScale(n, RoundingMode.HALF_UP).doubleValue();
     }
 }

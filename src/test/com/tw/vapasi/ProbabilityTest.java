@@ -4,9 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-
 class ProbabilityTest {
-    private final double DELTA = 0.001;
 
     @Test
     void expectTrueWhenProbabilityReferencesAreEqual() {
@@ -46,40 +44,39 @@ class ProbabilityTest {
     void expectZeroPointZeroEightWithAndOfZeroPointFiveAndZeroPointOneSix() {
         Probability probabilityOne = new Probability(0.5);
         Probability probabilityOther = new Probability(0.16);
-        assertEquals(0.08, probabilityOne.andOperation(probabilityOther).value, DELTA);
+        assertEquals(new Probability(0.08), probabilityOne.andOperation(probabilityOther));
     }
 
     @Test
     void expectZeroPointTwoWithAndOfZeroPointTwoFiveAndZeroPointEight() {
         Probability probabilityOne = new Probability(0.25);
         Probability probabilityOther = new Probability(0.8);
-        assertEquals(0.2, probabilityOne.andOperation(probabilityOther).value, DELTA);
+        assertEquals(new Probability(0.2), probabilityOne.andOperation(probabilityOther));
     }
 
     @Test
     void expectZeroPointFourWithNotOfZeroPointSix() {
         Probability probability = new Probability(0.6);
-        assertEquals(0.4, probability.notOperation().value, DELTA);
+        assertEquals(new Probability(0.4), probability.notOperation());
     }
 
     @Test
     void expectZeroPointOneWithNotOfZeroPointNine() {
         Probability probability = new Probability(0.9);
-        assertEquals(0.1, probability.notOperation().value, DELTA);
+        assertEquals(new Probability(0.1), probability.notOperation());
     }
 
     @Test
     void expectZeroPointEightSixWithOrOfZeroPointThreeAndZeroPointEight() {
         Probability probabilityOne = new Probability(0.3);
         Probability probabilityOther = new Probability(0.8);
-        assertEquals(0.86, probabilityOne.orOperation(probabilityOther).value, DELTA);
+        assertEquals(new Probability(0.86), probabilityOne.orOperation(probabilityOther));
     }
 
     @Test
     void expectZeroPointSevenSixWithOrOfZeroPointSevenAndZeroPointTwo() {
         Probability probabilityOne = new Probability(0.7);
         Probability probabilityOther = new Probability(0.2);
-        assertEquals(0.76, probabilityOne.orOperation(probabilityOther).value, DELTA);
+        assertEquals(new Probability(0.76), probabilityOne.orOperation(probabilityOther));
     }
 }
-
