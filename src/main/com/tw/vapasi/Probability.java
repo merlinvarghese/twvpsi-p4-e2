@@ -4,12 +4,27 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Objects;
 
-// Models a chance of an event occurring
+// Models the chance of the occurrence of an event
 class Probability {
+    private static final double CERTAINTY = 1;
+    private static final int PRECISION_TWO = 2;
+
     private final double value;
 
     Probability(double probability) {
         this.value = probability;
+    }
+
+    Probability andOperation(Probability probabilityOther) {
+        return new Probability(value * probabilityOther.value);
+    }
+
+    Probability notOperation() {
+        return new Probability(CERTAINTY - value);
+    }
+
+    Probability orOperation(Probability probabilityOther) {
+        return new Probability((value + probabilityOther.value) - andOperation(probabilityOther).value);
     }
 
     @Override
@@ -19,8 +34,7 @@ class Probability {
             return false;
         }
         Probability other = (Probability) obj;
-        System.out.println(value + " " + other.value);
-        return Double.compare(other.value, value) == 0;
+        return Double.compare(formatToNDecimalPlaces(PRECISION_TWO, other.value), formatToNDecimalPlaces(PRECISION_TWO, value)) == 0;
     }
 
     @Override
@@ -28,19 +42,8 @@ class Probability {
         return Objects.hash(value);
     }
 
-    Probability andOperation(Probability probabilityOther) {
-        return new Probability(formatToNDecimalPlaces(2, value * probabilityOther.value));
-    }
-
-    Probability notOperation() {
-        return new Probability(formatToNDecimalPlaces(2, 1 - value));
-    }
-
-    Probability orOperation(Probability probabilityOther) {
-        return new Probability(formatToNDecimalPlaces(2, (value + probabilityOther.value) - andOperation(probabilityOther).value));
-    }
-
     private double formatToNDecimalPlaces(int n, double input) {
         return new BigDecimal(input).setScale(n, RoundingMode.HALF_UP).doubleValue();
     }
+
 }
